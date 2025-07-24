@@ -1,4 +1,4 @@
-//import { request } from '@umijs/max';
+import { request } from '@umijs/max';
 
 // /
 //  * Upload a file to the backend
@@ -20,12 +20,12 @@
 //  * @param question - User's question
 //  * @returns response with the answer
 //  */
-// export async function askQuestion(question: string): Promise<{ result: string }> {
-//   return request('/query', {
-//     method: 'POST',
-//     data: { question },
-//   });
-// }
+export async function askQuestion(question: string): Promise<{ result: string }> {
+  return request('/query', {
+    method: 'POST',
+    data: { question },
+  });
+}
 
 // /
 //  * Trigger download of a file from S3 by object path

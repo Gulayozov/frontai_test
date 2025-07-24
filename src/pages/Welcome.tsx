@@ -1,10 +1,10 @@
 import { PageContainer } from '@ant-design/pro-components';
-// import { useModel } from '@umijs/max';
-// import { theme } from 'antd';
+import { message } from 'antd';
 import React, { useState } from 'react';
 
 import ChatInput from '../components/ChatInput';
 import ChatMessages from '../components/ChatMessages';
+import { askQuestion } from '../services/ant-design-pro/rag/api'; // Import your API function
 
 interface Message {
   role: 'user' | 'assistant';
@@ -12,24 +12,40 @@ interface Message {
 }
 
 const Welcome: React.FC = () => {
-  //  const { token } = theme.useToken();
-  //  const { initialState } = useModel('@@initialState');
-
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
 
   const handleSend = async (userMessage: string) => {
+    // Add user message immediately
     setMessages((prev) => [...prev, { role: 'user', content: userMessage }]);
     setLoading(true);
 
-    // Simulated assistant response (replace with API call)
-    setTimeout(() => {
+    try {
+      // Call your backend API
+      const response = await askQuestion(userMessage);
+      
+      // Add assistant response
       setMessages((prev) => [
         ...prev,
-        { role: 'assistant', content: 'This is a simulated response.' },
+        { role: 'assistant', content: response.result },
       ]);
+    } catch (error) {
+      console.error('Error calling API:', error);
+      
+      // Add error message for user
+      setMessages((prev) => [
+        ...prev,
+        { 
+          role: 'assistant', 
+          content: 'Sorry, I encountered an error while processing your request. Please try again.' 
+        },
+      ]);
+      
+      // Show error notification
+      message.error('Failed to get response from server');
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   return (
