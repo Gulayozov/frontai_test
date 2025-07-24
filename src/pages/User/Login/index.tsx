@@ -13,6 +13,8 @@ import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
+// Import useNavigate from UmiJS
+import { useNavigate } from '@umijs/max';
 
 const useStyles = createStyles(({ token }) => {
   return {
@@ -101,6 +103,9 @@ interface SignupFormValues {
 }
 
 const Login: React.FC = () => {
+  // Add navigate hook at the top of component
+  const navigate = useNavigate();
+  
   const [type, setType] = useState<string>('account');
   const [loginError, setLoginError] = useState<string>('');
   const [signupError, setSignupError] = useState<string>('');
@@ -122,33 +127,38 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (values: LoginFormValues) => {
     try {
+      console.log('1. Starting login process...');
       setLoginError('');
       
-      // Send login request with only required fields
+      console.log('2. Sending login request...', values);
       const response = await login({
         login: values.login,
         password: values.password,
       });
 
-      // Store the access token
+      console.log('3. Login response received:', response);
+      
       tokenStorage.set(response.access_token);
+      console.log('4. Token stored:', tokenStorage.get());
 
       const defaultLoginSuccessMessage = intl.formatMessage({
         id: 'pages.login.success',
         defaultMessage: '登录成功！',
       });
       message.success(defaultLoginSuccessMessage);
-
-      await fetchUserInfo();
+      console.log('5. Success message displayed');
       
-      // Redirect to original page or home
+      console.log('6. About to redirect...');
+      
       const urlParams = new URL(window.location.href).searchParams;
-      history.push(urlParams.get('redirect') || '/');
+      const redirectPath = urlParams.get('redirect') || '/welcome';
+      console.log('Redirecting to:', redirectPath);
+      window.location.replace(redirectPath);
+
       
     } catch (error: any) {
-      console.error('Login error:', error);
+      console.error('Login error:', error); // This should show any errors
       
-      // Handle backend error response
       const errorMessage = error?.data?.detail || error?.message || intl.formatMessage({
         id: 'pages.login.failure',
         defaultMessage: '登录失败，请重试！',
@@ -233,6 +243,7 @@ const Login: React.FC = () => {
             <ActionIcons key="icons" />,
           ]}
           onFinish={async (values: LoginFormValues | SignupFormValues) => {
+            console.log('Form submitted with values:', values); // Add this line
             if (type === 'account') {
               await handleSubmit(values as LoginFormValues);
             } else if (type === 'signup') {

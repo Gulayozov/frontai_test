@@ -20,7 +20,6 @@ export default {
   'pages.welcome.alertMessage': 'Componentes pesados mais rápidos e mais fortes foram lançados.',
   'pages.404.subTitle': 'Desculpe, a página que você visitou não existe. ',
   'pages.404.buttonText': 'Voltar à página inicial',
-  // ...existing code...
   'pages.signup.tab': 'Registrar-se',
   'pages.signup.login.placeholder': 'E-mail',
   'pages.signup.login.required': 'Por favor, insira seu e-mail!',
@@ -31,4 +30,11 @@ export default {
   'pages.signup.password.required': 'Por favor, insira sua senha!',
   'pages.signup.submit': 'Registrar-se',
   'pages.signup.success': 'Registro realizado com sucesso!',
+  'pages.login.login.invalid': 'Formato de usuário inválido!',
+  'pages.login.password.min': 'A senha deve ter pelo menos 6 caracteres',
+  'pages.login.password.max': 'A senha não pode exceder 20 caracteres',
+  'pages.signup.name.max': 'O nome não pode exceder 50 caracteres',
+  'pages.signup.password.min': 'A senha deve ter pelo menos 6 caracteres',
+  'pages.signup.password.max': 'A senha não pode exceder 20 caracteres',
+  'pages.signup.failure': 'Falha no registro, por favor tente novamente!'
 };

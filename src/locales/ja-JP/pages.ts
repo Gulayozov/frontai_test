@@ -20,7 +20,6 @@ export default {
   'pages.welcome.alertMessage': 'より高速で強力な頑丈なコンポーネントがリリースされました。',
   'pages.404.subTitle': '申し訳ありませんが、アクセスしたページは存在しません。',
   'pages.404.buttonText': 'ホームに戻る',
-  // ...existing code...
   'pages.signup.tab': '新規登録',
   'pages.signup.login.placeholder': 'メールアドレス',
   'pages.signup.login.required': 'メールアドレスを入力してください！',
@@ -31,4 +30,11 @@ export default {
   'pages.signup.password.required': 'パスワードを入力してください！',
   'pages.signup.submit': '新規登録',
   'pages.signup.success': '登録が完了しました！',
+  'pages.login.login.invalid': 'ユーザー名の形式が正しくありません！',
+  'pages.login.password.min': 'パスワードは6文字以上である必要があります',
+  'pages.login.password.max': 'パスワードは20文字を超えることはできません',
+  'pages.signup.name.max': '名前は50文字を超えることはできません',
+  'pages.signup.password.min': 'パスワードは6文字以上である必要があります',
+  'pages.signup.password.max': 'パスワードは20文字を超えることはできません',
+  'pages.signup.failure': '登録に失敗しました。もう一度お試しください！'
 };

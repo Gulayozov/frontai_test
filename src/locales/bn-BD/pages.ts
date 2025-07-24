@@ -20,7 +20,6 @@ export default {
   'pages.welcome.alertMessage': 'দ্রুত এবং শক্তিশালী ভারী শুল্ক উপাদান প্রকাশ করা হয়েছে।',
   'pages.404.subTitle': 'দুঃখিত, আপনি যে পৃষ্ঠাটি দেখতে চান তা বিদ্যমান নেই।',
   'pages.404.buttonText': 'প্রধান পাতায় ফিরে যান',
-  // ...existing code...
   'pages.signup.tab': 'নিবন্ধন করুন',
   'pages.signup.login.placeholder': 'ইমেইল',
   'pages.signup.login.required': 'আপনার ইমেইল ইনপুট করুন!',
@@ -31,4 +30,11 @@ export default {
   'pages.signup.password.required': 'আপনার পাসওয়ার্ড ইনপুট করুন!',
   'pages.signup.submit': 'নিবন্ধন করুন',
   'pages.signup.success': 'নিবন্ধন সফল হয়েছে!',
+  'pages.login.login.invalid': 'ব্যবহারকারীর নাম ফরম্যাট সঠিক নয়!',
+  'pages.login.password.min': 'পাসওয়ার্ড কমপক্ষে ৬ টি অক্ষর হতে হবে',
+  'pages.login.password.max': 'পাসওয়ার্ড ২০ অক্ষরের বেশি হতে পারবে না',
+  'pages.signup.name.max': 'নাম ৫০ অক্ষরের বেশি হতে পারবে না',
+  'pages.signup.password.min': 'পাসওয়ার্ড কমপক্ষে ৬ টি অক্ষর হতে হবে',
+  'pages.signup.password.max': 'পাসওয়ার্ড ২০ অক্ষরের বেশি হতে পারবে না',
+  'pages.signup.failure': 'নিবন্ধন ব্যর্থ হয়েছে, আবার চেষ্টা করুন!'
 };

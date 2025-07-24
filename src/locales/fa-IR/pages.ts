@@ -19,7 +19,6 @@ export default {
   'pages.welcome.alertMessage': 'اجزای سنگین تر سریعتر و قوی تر آزاد شده اند.',
   'pages.404.subTitle': 'ببخشيد، صفحه اي که ديديد وجود نداره',
   'pages.404.buttonText': 'بازگشت به صفحه اصلی',
-  // ...existing code...
   'pages.signup.tab': 'ثبت نام',
   'pages.signup.login.placeholder': 'ایمیل',
   'pages.signup.login.required': 'لطفاً ایمیل خود را وارد کنید!',
@@ -30,4 +29,11 @@ export default {
   'pages.signup.password.required': 'لطفاً رمز عبور خود را وارد کنید!',
   'pages.signup.submit': 'ثبت نام',
   'pages.signup.success': 'ثبت نام با موفقیت انجام شد!',
+  'pages.login.login.invalid': 'فرمت نام کاربری نامعتبر است!',
+  'pages.login.password.min': 'رمز عبور باید حداقل ۶ کاراکتر باشد',
+  'pages.login.password.max': 'رمز عبور نمی‌تواند بیشتر از ۲۰ کاراکتر باشد',
+  'pages.signup.name.max': 'نام نمی‌تواند بیشتر از ۵۰ کاراکتر باشد',
+  'pages.signup.password.min': 'رمز عبور باید حداقل ۶ کاراکتر باشد',
+  'pages.signup.password.max': 'رمز عبور نمی‌تواند بیشتر از ۲۰ کاراکتر باشد',
+  'pages.signup.failure': 'ثبت نام با شکست مواجه شد، لطفا دوباره سعی کنید!'
 };

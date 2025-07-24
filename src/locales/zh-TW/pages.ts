@@ -19,7 +19,6 @@ export default {
   'pages.welcome.alertMessage': '更快更強的重型組件，已經發布。',
   'pages.404.subTitle': '抱歉，您訪問的頁面不存在。',
   'pages.404.buttonText': '返回首頁',
-  // ...existing code...
   'pages.signup.tab': '註冊',
   'pages.signup.login.placeholder': '電子郵件',
   'pages.signup.login.required': '請輸入電子郵件！',
@@ -30,4 +29,11 @@ export default {
   'pages.signup.password.required': '請輸入密碼！',
   'pages.signup.submit': '註冊',
   'pages.signup.success': '註冊成功！',
+  'pages.login.login.invalid': '用戶名格式不正確！',
+  'pages.login.password.min': '密碼至少需要6個字符',
+  'pages.login.password.max': '密碼不能超過20個字符',
+  'pages.signup.name.max': '姓名不能超過50個字符',
+  'pages.signup.password.min': '密碼至少需要6個字符',
+  'pages.signup.password.max': '密碼不能超過20個字符',
+  'pages.signup.failure': '註冊失敗，請重試！'
 };
