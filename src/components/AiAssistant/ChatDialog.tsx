@@ -9,6 +9,7 @@ import {
   PaperClipOutlined 
 } from '@ant-design/icons';
 import type { UploadFile, UploadProps } from 'antd';
+import { askQuestion, uploadFile } from '@/services/ant-design-pro/rag/api';
 
 const { TextArea } = Input;
 const { Paragraph } = Typography;
@@ -149,17 +150,11 @@ const ChatInput: React.FC<{
   const handleUploadChange: UploadProps['onChange'] = (info) => {
     let newFileList = [...info.fileList];
     newFileList = newFileList.slice(-2);
-    newFileList = newFileList.map((file) => {
-      if (file.response) {
-        file.url = file.response.url;
-      }
-      return file;
-    });
     setFileList(newFileList);
   };
 
   const uploadProps: UploadProps = {
-    action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
+    beforeUpload: () => false, // Prevent auto upload
     onChange: handleUploadChange,
     multiple: true,
     showUploadList: false,
@@ -183,7 +178,6 @@ const ChatInput: React.FC<{
             <div key={file.uid} style={{ fontSize: 13, color: '#555', display: 'flex', alignItems: 'center', gap: 6 }}>
               <PaperClipOutlined />
               <span>{file.name}</span>
-              {file.status === 'uploading' && <em style={{ color: '#999' }}>(Uploading...)</em>}
             </div>
           ))}
         </div>
@@ -263,41 +257,58 @@ const ChatDialog: React.FC<ChatDialogProps> = ({
   // Default message sending function
   const defaultSendMessage = async (userMessage: string, files: UploadFile[]): Promise<string> => {
     try {
-      // Replace this with your actual API call
-      // const response = await askQuestion(userMessage);
-      // return response.result;
-      
-      // Mock response for demo purposes
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      return `Это ответ на ваше сообщение: "${userMessage}"`;
-    } catch (error) {
+      // Call the real backend API
+      const response = await askQuestion(userMessage);
+      return response.answer;
+    } catch (error: any) {
       console.error('Error calling API:', error);
+      // Try to extract error message from API error response
+      if (error?.data?.detail?.[0]?.msg) {
+        throw new Error(error.data.detail[0].msg);
+      }
       throw new Error('Извините, произошла ошибка при обработке вашего запроса. Попробуйте еще раз.');
     }
   };
 
   const handleSend = async (userMessage: string, files: UploadFile[]) => {
-    // Add user message
-    setMessages((prev) => [...prev, { role: 'user', content: userMessage }]);
     setLoading(true);
-
+    let fileUploadMessages: Message[] = [];
     try {
-      // Use custom function or default
-      const sendFunction = onSendMessage || defaultSendMessage;
-      const response = await sendFunction(userMessage, files);
-      
-      // Add assistant response
-      setMessages((prev) => [
-        ...prev,
-        { role: 'assistant', content: response },
-      ]);
+      // Upload files if any
+      if (files && files.length > 0) {
+        for (const file of files) {
+          // Only upload if file.originFileObj exists
+          if (file.originFileObj) {
+            const response = await uploadFile(file.originFileObj as File);
+            fileUploadMessages.push({
+              role: 'user',
+              content: `Uploaded file: ${file.name}`,
+            });
+          }
+        }
+      }
+      // Add file upload messages to chat
+      if (fileUploadMessages.length > 0) {
+        setMessages((prev) => [...prev, ...fileUploadMessages]);
+      }
+      // Add user message if present
+      if (userMessage) {
+        setMessages((prev) => [...prev, { role: 'user', content: userMessage }]);
+        // Use custom function or default
+        const sendFunction = onSendMessage || defaultSendMessage;
+        const response = await sendFunction(userMessage, files);
+        // Add assistant response
+        setMessages((prev) => [
+          ...prev,
+          { role: 'assistant', content: response },
+        ]);
+      }
     } catch (error) {
-      // Add error message
       setMessages((prev) => [
         ...prev,
-        { 
-          role: 'assistant', 
-          content: error instanceof Error ? error.message : 'Произошла ошибка при обработке запроса.' 
+        {
+          role: 'assistant',
+          content: error instanceof Error ? error.message : 'Произошла ошибка при обработке запроса.',
         },
       ]);
     } finally {
@@ -340,7 +351,7 @@ const ChatDialog: React.FC<ChatDialogProps> = ({
             flexDirection: 'column'
           }
         }}
-        destroyOnClose={false}
+        destroyOnHidden={false}
         {...modalProps}
       >
         <div
